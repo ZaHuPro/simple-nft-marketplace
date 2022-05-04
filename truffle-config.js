@@ -33,9 +33,9 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-  contracts_directory: "./src/contracts",
-  contracts_build_directory: "./src/abis",
-  migrations_directory: "./src/migrations",
+  contracts_directory: "./src/contracts/contracts",
+  contracts_build_directory: "./src/contracts/abis",
+  migrations_directory: "./src/contracts/migrations",
 
   networks: {
     development: {
