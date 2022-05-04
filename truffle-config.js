@@ -35,7 +35,7 @@ module.exports = {
    */
   contracts_directory: "./src/contracts",
   contracts_build_directory: "./src/abis",
-  migrations_directory: "./src/truffle-migrations",
+  migrations_directory: "./src/migrations",
 
   networks: {
     development: {
