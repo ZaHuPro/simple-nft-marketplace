@@ -12,10 +12,8 @@ contract KryptoBirdz is ERC721Connector {
     }
 
     function mint(string memory _kryptoBird) public {
-
         require(!_kryptoBirdzExist[_kryptoBird], 'KryptoBirdz: krypto_bird_already_exist');
 
-        // uint256 _id = kryptoBirdz.push(_kryptoBird);
         kryptoBirdz.push(_kryptoBird);
         uint256 _id = kryptoBirdz.length -1;
         _mint(msg.sender, _id);
