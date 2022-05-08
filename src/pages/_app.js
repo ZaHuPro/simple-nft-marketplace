@@ -1,23 +1,11 @@
 import React from "react";
-// import ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
-import { transitions, positions, Provider as AlertProvider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
+import { ToastContainer } from "react-toastify";
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "../styles/tailwind.css";
-import "../styles/global.css";
-
-const options = {
-  position: positions.TOP_CENTER,
-  timeout: 8000,
-  offset: "50px",
-  transition: transitions.SCALE,
-  containerStyle: {
-    zIndex: 500,
-  },
-};
+import "react-toastify/dist/ReactToastify.css";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export default class MyApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -36,18 +24,24 @@ export default class MyApp extends App {
 
     return (
       <React.Fragment>
-        <AlertProvider template={AlertTemplate} {...options}>
-          <Head>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            />
-            <title>Peacock Club</title>
-          </Head>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <script src="https://cdn.tailwindcss.com"></script>
+          <title>Wallet</title>
+        </Head>
+        <ChakraProvider>
           <Layout>
             <Component {...pageProps} />
+            <ToastContainer
+              hideProgressBar
+              position="bottom-right"
+              autoClose={2000}
+            />
           </Layout>
-        </AlertProvider>
+        </ChakraProvider>
       </React.Fragment>
     );
   }

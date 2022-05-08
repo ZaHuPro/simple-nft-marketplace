@@ -36,6 +36,7 @@ module.exports = {
   contracts_directory: "./src/contracts/contracts",
   contracts_build_directory: "./src/contracts/abis",
   migrations_directory: "./src/contracts/migrations",
+  test_directory: './src/test',
 
   networks: {
     development: {
