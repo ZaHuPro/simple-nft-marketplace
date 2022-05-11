@@ -1,9 +1,44 @@
 import { useEffect, useState, useCallback } from "react";
+import Web3 from "web3";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { toHex, truncateAddress } from "./utils";
-import { toast } from "react-toastify";
+import { toHex, toDecimal } from "../utils/common";
+
+const networkParams = {
+  "0x63564c40": {
+    chainId: "0x63564c40",
+    rpcUrls: ["https://api.harmony.one"],
+    chainName: "Harmony Mainnet",
+    nativeCurrency: { name: "ONE", decimals: 18, symbol: "ONE" },
+    blockExplorerUrls: ["https://explorer.harmony.one"],
+    iconUrls: ["https://harmonynews.one/wp-content/uploads/2019/11/slfdjs.png"]
+  },
+  "0xa4ec": {
+    chainId: "0xa4ec",
+    rpcUrls: ["https://forno.celo.org"],
+    chainName: "Celo Mainnet",
+    nativeCurrency: { name: "CELO", decimals: 18, symbol: "CELO" },
+    blockExplorerUrl: ["https://explorer.celo.org"],
+    iconUrls: [
+      "https://celo.org/images/marketplace-icons/icon-celo-CELO-color-f.svg"
+    ]
+  },
+  "0x1691": {
+    chainId: "0x1691",
+    rpcUrls: ["http://127.0.0.1:7545"],
+    chainName: "Ganache 5777",
+    nativeCurrency: { name: "Ethereum", decimals: 18, symbol: "ETH" },
+    iconUrls: []
+  },
+  "0x539": {
+    chainId: "0x539",
+    rpcUrls: ["http://127.0.0.1:7545"],
+    chainName: "Ganache 1337",
+    nativeCurrency: { name: "Ethereum", decimals: 18, symbol: "ETH" },
+    iconUrls: []
+  }
+};
 
 const providerOptions = {
   walletconnect: {
@@ -19,6 +54,7 @@ let web3Modal;
 const useWeb3 = () => {
   const [provider, setProvider] = useState();
   const [library, setLibrary] = useState();
+  const [web3, setWeb3] = useState();
   const [account, setAccount] = useState();
   const [signature, setSignature] = useState("");
   const [error, setError] = useState("");
@@ -41,10 +77,12 @@ const useWeb3 = () => {
     try {
       const provider = await web3Modal.connect();
       const library = new ethers.providers.Web3Provider(provider);
+      const web3 = new Web3(provider);
       const accounts = await library.listAccounts();
       const network = await library.getNetwork();
       setProvider(provider);
       setLibrary(library);
+      setWeb3(web3);
       if (accounts) setAccount(accounts[0]);
       setChainId(network.chainId);
     } catch (error) {
@@ -139,7 +177,8 @@ const useWeb3 = () => {
       };
 
       const handleChainChanged = (_hexChainId) => {
-        setChainId(_hexChainId);
+        const chainId = toDecimal(_hexChainId);
+        setChainId(chainId);
       };
 
       const handleDisconnect = () => {
@@ -164,6 +203,7 @@ const useWeb3 = () => {
   return {
     provider,
     library,
+    web3,
     account,
     signature,
     error,

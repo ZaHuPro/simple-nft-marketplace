@@ -11,12 +11,13 @@ import {
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 import { Tooltip } from "@chakra-ui/react";
 import useWeb3 from "../hooks/useWeb3";
-import { toHex, truncateAddress } from "../hooks/utils";
+import { toHex, truncateAddress } from "../utils/common";
 
 const Home = () => {
   const {
     provider,
     library,
+    web3,
     account,
     signature,
     error,
@@ -33,6 +34,13 @@ const Home = () => {
     verifyMessage,
     disconnect
   } = useWeb3();
+
+    useEffect(() => {
+      if(provider) {
+        window.web3 = web3;
+        window.library = library;
+      }
+    }, [provider])
 
   return (
     <>
@@ -85,6 +93,8 @@ const Home = () => {
                   Switch Network
                 </Button>
                 <Select placeholder="Select network" onChange={handleNetwork}>
+                  <option value="1337">Ganache 1337</option>
+                  <option value="5777">Ganache 5777</option>
                   <option value="3">Ropsten</option>
                   <option value="4">Rinkeby</option>
                   <option value="42">Kovan</option>

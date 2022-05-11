@@ -8,6 +8,9 @@
     "build": "next build && next export",
     "start": "next start",
     "test": "truffle test",
+    "compile": "truffle compile",
+    "migrate": "truffle migrate",
+    "migrate:reset": "truffle migrate --reset",
     "lint": "next lint",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run dev",
     "build:tailwind": "tailwind build src/styles/index.css -o src/styles/tailwind.css"

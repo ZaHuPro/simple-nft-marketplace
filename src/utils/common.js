@@ -11,4 +11,9 @@ export const truncateAddress = (address) => {
     const val = Number(num);
     return "0x" + val.toString(16);
   };
+
+  export const toDecimal = (num) => {
+    const val = num.toString();
+    return parseInt(val, 16);  
+  };
   
